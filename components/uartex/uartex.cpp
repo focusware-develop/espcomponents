@@ -630,7 +630,7 @@ std::string UARTExDebug::to_hex_string(const uint8_t* data, const uint16_t len)
     hex_str.reserve(static_cast<size_t>(size) * 2 + 10);
     for (uint16_t i = 0; i < size; ++i)
     {
-        std::snprintf(buf, sizeof(buf), "%02X", data[i]);
+        std::snprintf(buf, sizeof(buf), "%02X ", data[i]);
         hex_str.append(buf);
     }
     if (len > 120) hex_str.append("...");
