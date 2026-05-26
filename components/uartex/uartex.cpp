@@ -85,6 +85,7 @@ bool UARTExComponent::read_from_uart()
                 }
                 delay(1);
             }
+            ESP_LOGD(TAG, "-> Timeout %d >= %d", elapsed_time(this->rx_timer_), this->conf_rx_timeout_);
         }
     }
     else if (this->rx_priority_ == PRIORITY_LOOP)
