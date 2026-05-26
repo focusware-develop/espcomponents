@@ -81,7 +81,10 @@ bool UARTExComponent::read_from_uart()
             {
                 while (this->available())
                 {
-                    if (parse_bytes()) return true;
+                    if (parse_bytes()) {
+                        ESP_LOGD(TAG, "-> Data received");
+                        return true;
+                    }
                 }
                 delay(1);
             }
@@ -100,7 +103,10 @@ bool UARTExComponent::read_from_uart()
         while (this->available() && elapsed_time(timer) < this->conf_rx_timeout_)
         {
             this->rx_processing_ = true;
-            if (parse_bytes()) return true;
+            if (parse_bytes()) {
+                ESP_LOGD(TAG, "-> Loop data received");
+                return true;
+            }
         }
         ESP_LOGD(TAG, "-> Loop timeout %d >= %d", elapsed_time(timer), this->conf_rx_timeout_);
     }
