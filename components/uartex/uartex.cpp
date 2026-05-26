@@ -624,7 +624,7 @@ uint16_t UARTExComponent::get_checksum(CHECKSUM checksum, const std::vector<uint
 
 std::string UARTExDebug::to_hex_string(const uint8_t* data, const uint16_t len)
 {
-    char buf[3] = {0}; 
+    char buf[4] = {0}; 
     std::string hex_str;
     uint16_t size = len >= 120 ? 120 : len;
     hex_str.reserve(static_cast<size_t>(size) * 2 + 10);
