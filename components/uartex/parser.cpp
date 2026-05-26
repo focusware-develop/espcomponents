@@ -1,4 +1,7 @@
 #include "parser.h"
+#include "esphome/core/log.h"
+
+static const char *TAG = "uartex";
 
 Parser::Parser()
 {
@@ -174,6 +177,7 @@ bool Parser::calculate_dynamic_length()
         }
         
         dynamic_total_len_ = header_.size() + data_length_offset_ + data_length_size_ + data_len + data_length_adjust_ + checksum_len_ + footer_.size();
+        ESP_LOGD(TAG, "-> Dynamic length: %d", dynamic_total_len_);
     }
     
     return true;
