@@ -85,7 +85,7 @@ bool UARTExComponent::read_from_uart()
                 }
                 delay(1);
             }
-            ESP_LOGD(TAG, "-> Timeout %d >= %d", elapsed_time(this->rx_timer_), this->conf_rx_timeout_);
+            ESP_LOGD(TAG, "-> Data timeout %d >= %d", elapsed_time(this->rx_timer_), this->conf_rx_timeout_);
         }
     }
     else if (this->rx_priority_ == PRIORITY_LOOP)
@@ -102,6 +102,7 @@ bool UARTExComponent::read_from_uart()
             this->rx_processing_ = true;
             if (parse_bytes()) return true;
         }
+        ESP_LOGD(TAG, "-> Loop timeout %d >= %d", elapsed_time(timer), this->conf_rx_timeout_);
     }
     return false;
 }
