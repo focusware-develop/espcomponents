@@ -119,7 +119,7 @@ bool UARTExComponent::parse_bytes()
     if (this->read_byte(&byte))
     {
         if (this->rx_parser_.parse_byte(byte)) return true;
-        if (!this->rx_parser_.has_footer() && validate_data() == ERROR_NONE) return true;
+        if (!this->rx_parser_.has_footer() && validate_data(false) == ERROR_NONE) return true;
         this->rx_timer_ = get_time();
     }
     return false;
@@ -347,7 +347,7 @@ const cmd_t* UARTExComponent::current_tx_cmd()
     return this->current_tx_data_.cmd;
 }
 
-ERROR UARTExComponent::validate_data()
+ERROR UARTExComponent::validate_data(bool check_dynamic_length)
 {
     auto& data = this->rx_parser_.data();
     if (data.empty())
@@ -372,7 +372,7 @@ ERROR UARTExComponent::validate_data()
     }
     if (!this->rx_footer_.has_value() && this->conf_rx_length_ == 0 && this->rx_checksum_ == CHECKSUM_NONE && this->rx_checksum_2_ == CHECKSUM_NONE)
     {
-        if (this->conf_rx_data_length_.has_value()) {
+        if (this->conf_rx_data_length_.has_value() && check_dynamic_length) {
             auto& dl = this->conf_rx_data_length_.value();
             if (dl.length == 0)
                 return ERROR_RX_TIMEOUT;
@@ -384,7 +384,7 @@ ERROR UARTExComponent::validate_data()
 
 bool UARTExComponent::verify_data()
 {
-    ERROR error = validate_data();
+    ERROR error = validate_data(true);
     publish_error(error);
     if (error != ERROR_NONE) this->error_callback_.call(error);
     return (error == ERROR_NONE || error == ERROR_RX_TIMEOUT);

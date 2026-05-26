@@ -104,7 +104,7 @@ protected:
     void clear_tx_data();
     const cmd_t* current_tx_cmd();
     void write_tx_cmd();
-    ERROR validate_data();
+    ERROR validate_data(bool check_dynamic_length);
     bool verify_data();
     bool publish_error(ERROR error_code);
     void publish_rx_log(const std::vector<unsigned char>& data);
