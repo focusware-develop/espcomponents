@@ -372,7 +372,8 @@ ERROR UARTExComponent::validate_data()
     }
     if (!this->rx_footer_.has_value() && this->conf_rx_length_ == 0 && this->rx_checksum_ == CHECKSUM_NONE && this->rx_checksum_2_ == CHECKSUM_NONE)
     {
-        return ERROR_RX_TIMEOUT;
+        if (this->conf_rx_data_length_.length == 0)
+            return ERROR_RX_TIMEOUT;
     }
     return ERROR_NONE;
 }
