@@ -622,5 +622,23 @@ uint16_t UARTExComponent::get_checksum(CHECKSUM checksum, const std::vector<uint
     return crc;
 }
 
+std::string to_hex_string(const uint8_t* data, const uint16_t len)
+{
+    char buf[3] = {0}; 
+    std::string hex_str;
+    uint16_t size = len >= 120 ? 120 : len;
+    hex_str.reserve(static_cast<size_t>(size) * 2 + 10);
+    for (uint16_t i = 0; i < size; ++i)
+    {
+        std::snprintf(buf, sizeof(buf), "%02X", data[i]);
+        hex_str.append(buf);
+    }
+    if (len > 120) hex_str.append("...");
+    char size_buf[16] = {0};
+    std::snprintf(size_buf, sizeof(size_buf), "(%u)", len);
+    hex_str.append(size_buf);
+    return hex_str;
+}
+
 }  // namespace uartex
 }  // namespace esphome

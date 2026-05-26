@@ -167,5 +167,7 @@ protected:
     std::unordered_map<std::string, cmd_t> command_map_{};
 };
 
+std::string to_hex_string(const uint8_t* data, const uint16_t len);
+
 } // namespace uartex
 } // namespace esphome
