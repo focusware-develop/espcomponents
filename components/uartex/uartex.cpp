@@ -82,7 +82,7 @@ bool UARTExComponent::read_from_uart()
                 while (this->available())
                 {
                     if (parse_bytes()) {
-                        ESP_LOGD(TAG, "-> Data received");
+                        // ESP_LOGD(TAG, "-> Data received");
                         return true;
                     }
                 }
@@ -104,7 +104,7 @@ bool UARTExComponent::read_from_uart()
         {
             this->rx_processing_ = true;
             if (parse_bytes()) {
-                ESP_LOGD(TAG, "-> Loop data received");
+                // ESP_LOGD(TAG, "-> Loop data received");
                 return true;
             }
         }
